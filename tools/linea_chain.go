@@ -45,8 +45,7 @@ func main() {
 		fmt.Println("Block: ", block)
 	}
 
-	address := "0x4B965600D018C467D39bf3f36bab0a8fD9d5A0B1"
-
+	address := "0x4B965600D018C467D39bf3f36bab0a8fD9d5A0B1" // wallet wich i got in Linea hackathon :)
 
 
 	balance, err := client.BalanceAt(ctx, common.HexToAddress(address), nil)
