@@ -8,8 +8,6 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/common"
-
-
 )
 
 
@@ -56,5 +54,26 @@ func main() {
 	fmt.Println("Main balance - ", address, weiToEther(balance).String(),
 	"ETH")
 
-}
 
+
+	latest, err := client.BlockByNumber(ctx, big.NewInt(int64(block)))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("blk num: %v\n", latest.Number())
+
+	for _, tx := range latest.Transactions() {
+		fmt.Println("Tx Hash: ", tx.Hash().Hex())
+		fmt.Println("Tx Value: ", tx.Value().String())    // 10000000000000000
+		fmt.Println("Tx Gas: ", tx.Gas())               // 105000
+		fmt.Println("Tx Gas Price: ", tx.GasPrice().Uint64()) // 102000000000
+		fmt.Println("Tx Nonce: ", tx.Nonce())             // 110644
+		fmt.Println("Tx Data: ", tx.Data())              // []
+		if tx.To() != nil {
+			fmt.Println("Tx To: ", tx.To().Hex())
+		} else {
+			fmt.Println("Tx To: nil")
+		}
+	}
+}
